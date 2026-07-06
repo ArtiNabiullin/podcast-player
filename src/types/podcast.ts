@@ -1,3 +1,4 @@
+// интерфейс подкаста
 export interface Podcast {
   id: string;
   title: string;

@@ -1,5 +1,6 @@
 import type { BestPodcastsResponse } from "../types/api";
 import type { Podcast } from "../types/podcast";
+import type { PodcastApi } from "../types/api";
 import { request } from "./client";
 import { mapPodcast } from "../mappers/podcastMapper";
 
@@ -10,7 +11,12 @@ export async function getBestPodcasts(): Promise<Podcast[]> {
   return data.podcasts.map(mapPodcast);
 }
 
+// В этой функции реализуем поиск подкастов по ключевому слову
 export async function searchPodcasts(query: string): Promise<Podcast[]> {
+  interface SearchResponse {
+    results: PodcastApi[];
+  }
+
   const data = await request<SearchResponse>(
     `/search?q=${encodeURIComponent(query)}`,
   );
