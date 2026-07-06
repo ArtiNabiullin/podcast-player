@@ -3,6 +3,6 @@ export interface Podcast {
   title: string;
   image: string;
   publisher: string;
-  total_episodes: number;
+  totalEpisodes: number;
   description: string;
 }

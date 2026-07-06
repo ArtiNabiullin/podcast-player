@@ -1,15 +1,37 @@
 import type { Podcast } from "../types/podcast";
 
-export function createPodcastCard(podcast: Podcast): HTMLDivElement {
+//создаем карточки подкастов
+
+function createTextElement<K extends keyof HTMLElementTagNameMap>(
+  tag: K,
+  text: string,
+): HTMLElementTagNameMap[K] {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  return element;
+}
+
+export function createPodcastCard(
+  podcast: Podcast,
+  onClick: (podcast: Podcast) => void,
+): HTMLDivElement {
   const card = document.createElement("div");
   card.className = "card";
 
-  card.innerHTML = `
-  <img src="${podcast.image}" alt="${podcast.title}" />
-  <h3>${podcast.title}</h3>
-  <p>${podcast.publisher}</p>
-  <small>${podcast.total_episodes}</small>
-  `;
+  const image = document.createElement("img");
+  image.src = podcast.image;
+  image.alt = podcast.title;
+
+  const title = createTextElement("h3", podcast.title);
+  const publisher = createTextElement("p", podcast.publisher);
+  const episodes = createTextElement(
+    "small",
+    `${podcast.totalEpisodes} episodes`,
+  );
+
+  card.append(image, title, publisher, episodes);
+
+  card.addEventListener("click", () => onClick(podcast));
 
   return card;
 }
