@@ -1,6 +1,7 @@
 import "./style.css";
-import { getBestPodcasts } from "./api/podcasts";
+import { searchPodcasts, getBestPodcasts } from "./api/podcasts";
 import { createPodcastCard } from "./components/createPodcastCard";
+import { setupSearch } from "./components/search";
 
 // Рендерим карточки
 function renderPodcasts(podcasts: Podcast[]) {
@@ -25,8 +26,21 @@ function renderPodcasts(podcasts: Podcast[]) {
 // Инициализация приложения
 async function init() {
   try {
-    const podcasts = await getBestPodcasts();
-    renderPodcasts(podcasts);
+    const bestPodcasts = await getBestPodcasts();
+
+    renderPodcasts(bestPodcasts);
+
+    setupSearch(async (query) => {
+      if (!query.trim()) {
+        renderPodcasts(bestPodcasts);
+
+        return;
+      }
+
+      const results = await searchPodcasts(query);
+
+      renderPodcasts(results);
+    });
   } catch (error) {
     console.error(error);
 

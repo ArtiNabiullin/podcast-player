@@ -26,7 +26,7 @@ export function createPodcastCard(
   const publisher = createTextElement("p", podcast.publisher);
   const episodes = createTextElement(
     "small",
-    `${podcast.totalEpisodes} episodes`,
+    `${podcast.totalEpisodes ?? "Unknown"} episodes`,
   );
 
   card.append(image, title, publisher, episodes);
