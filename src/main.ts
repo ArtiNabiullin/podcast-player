@@ -2,6 +2,7 @@ import "./style.css";
 import { getBestPodcasts } from "./api/podcasts";
 import { createPodcastCard } from "./components/createPodcastCard";
 
+// Рендерим карточки
 function renderPodcasts(podcasts: Podcast[]) {
   const container = document.getElementById("podcasts");
 
@@ -21,6 +22,7 @@ function renderPodcasts(podcasts: Podcast[]) {
   });
 }
 
+// Инициализация приложения
 async function init() {
   try {
     const podcasts = await getBestPodcasts();

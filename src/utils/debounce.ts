@@ -1,7 +1,7 @@
 // Функция для дебаунса
 
-export function debounce<T extends unknown>(
-  callback: () => void,
+export function debounce<T extends unknown[]>(
+  callback: (...args: T) => void,
   delay: number,
 ) {
   let timer: number;
@@ -14,9 +14,3 @@ export function debounce<T extends unknown>(
     }, delay);
   };
 }
-
-const fn = debounce(() => {
-  console.log("Hello");
-}, 500);
-
-fn();
