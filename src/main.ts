@@ -49,3 +49,7 @@ async function init() {
 }
 
 init();
+
+const details = await getPodcast(selectedPodcast.id);
+
+console.log(details);
