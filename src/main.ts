@@ -2,6 +2,8 @@ import "./style.css";
 import { searchPodcasts, getBestPodcasts, getPodcast } from "./api/podcasts";
 import { createPodcastCard } from "./components/createPodcastCard";
 import { setupSearch } from "./components/search";
+import { renderPodcastDetails } from "./components/podcastDetails";
+import { showDetails, showPodcasts } from "./utils/view";
 
 // Рендерим карточки
 function renderPodcasts(podcasts: Podcast[]) {
@@ -15,13 +17,11 @@ function renderPodcasts(podcasts: Podcast[]) {
 
   podcasts.forEach((podcast) => {
     const card = createPodcastCard(podcast, async (selectedPodcast) => {
-      console.log("Selected podcast:");
-      console.log(selectedPodcast.title);
-      console.log(selectedPodcast.id);
-
       const details = await getPodcast(selectedPodcast.id);
 
-      console.log(details);
+      renderPodcastDetails(details);
+
+      showDetails();
     });
     container.appendChild(card);
   });
@@ -53,7 +53,3 @@ async function init() {
 }
 
 init();
-
-const details = await getPodcast(selectedPodcast.id);
-
-console.log(details);

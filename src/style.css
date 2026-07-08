@@ -26,3 +26,11 @@ body {
   width: 100%;
   border-radius: 8px;
 }
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}

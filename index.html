@@ -5,14 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Podcast-player</title>
-    <input id="search-input" type="text" placeholder="Search podcasts..." />
-    <div id="podcasts"></div>
-  </head>
-  <body>
     <div id="app">
       <h1>Podcast Player</h1>
-      <div id="podcasts"></div>
+      <input id="search-input" type="text" placeholder="Search podcasts..." />
+      <div id="podcasts" class="visible"></div>
+      <div id="details" class="hidden"></div>
+      <button id="back-button" class="hidden">Back</button>
     </div>
+  </head>
+  <body>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
