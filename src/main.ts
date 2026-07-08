@@ -1,5 +1,5 @@
 import "./style.css";
-import { searchPodcasts, getBestPodcasts } from "./api/podcasts";
+import { searchPodcasts, getBestPodcasts, getPodcast } from "./api/podcasts";
 import { createPodcastCard } from "./components/createPodcastCard";
 import { setupSearch } from "./components/search";
 
@@ -14,10 +14,14 @@ function renderPodcasts(podcasts: Podcast[]) {
   container.innerHTML = "";
 
   podcasts.forEach((podcast) => {
-    const card = createPodcastCard(podcast, (selectedPodcast) => {
+    const card = createPodcastCard(podcast, async (selectedPodcast) => {
       console.log("Selected podcast:");
       console.log(selectedPodcast.title);
       console.log(selectedPodcast.id);
+
+      const details = await getPodcast(selectedPodcast.id);
+
+      console.log(details);
     });
     container.appendChild(card);
   });

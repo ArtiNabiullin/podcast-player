@@ -1,8 +1,11 @@
-import type { BestPodcastsResponse } from "../types/api";
+import type {
+  BestPodcastsResponse,
+  PodcastDetailsResponse,
+} from "../types/api";
 import type { PodcastDetails, Podcast } from "../types/podcast";
 import type { PodcastApi } from "../types/api";
 import { request } from "./client";
-import { mapPodcast } from "../mappers/podcastMapper";
+import { mapPodcast, mapPodcastDetails } from "../mappers/podcastMapper";
 
 // В этой функции получаем данные
 export async function getBestPodcasts(): Promise<Podcast[]> {
@@ -24,6 +27,9 @@ export async function searchPodcasts(query: string): Promise<Podcast[]> {
   return data.results.map(mapPodcast);
 }
 
+// В этой функции получаем подробную информацию о подкасте по его id
 export async function getPodcast(id: string): Promise<PodcastDetails> {
-  return request<PodcastDetails>(`/podcasts/${id}`);
+  const data = await request<PodcastDetailsResponse>(`/podcasts/${id}`);
+
+  return mapPodcastDetails(data);
 }

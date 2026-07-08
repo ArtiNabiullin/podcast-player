@@ -15,8 +15,9 @@ export interface PodcastDetails extends Podcast {
 export interface Episode {
   id: string;
   title: string;
+  image: string;
   description: string;
   audio: string;
-  pub_date_ms: number;
-  audio_length_sec: number;
+  pubDateMs: number;
+  audioLengthSec: number;
 }

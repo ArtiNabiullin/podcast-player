@@ -11,3 +11,17 @@ export interface PodcastApi {
 export interface BestPodcastsResponse {
   podcasts: PodcastApi[];
 }
+
+export interface EpisodeApi {
+  id: string;
+  title: string;
+  description: string;
+  audio: string;
+  image: string;
+  pub_date_ms: number;
+  audio_length_sec: number;
+}
+
+export interface PodcastDetailsResponse extends PodcastApi {
+  episodes: EpisodeApi[];
+}

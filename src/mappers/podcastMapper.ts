@@ -1,5 +1,6 @@
-import type { PodcastApi } from "../types/api";
-import type { Podcast } from "../types/podcast";
+import type { PodcastApi, PodcastDetailsResponse } from "../types/api";
+import type { Podcast, PodcastDetails } from "../types/podcast";
+import { mapEpisode } from "./episodeMapper";
 
 // преобразуем данные
 export function mapPodcast(apiPodcast: PodcastApi): Podcast {
@@ -10,5 +11,15 @@ export function mapPodcast(apiPodcast: PodcastApi): Podcast {
     publisher: apiPodcast.publisher,
     totalEpisodes: apiPodcast.total_episodes,
     description: apiPodcast.description,
+  };
+}
+
+// добавляем данные конкретного епизода
+export function mapPodcastDetails(
+  apiPodcast: PodcastDetailsResponse,
+): PodcastDetails {
+  return {
+    ...mapPodcast(apiPodcast),
+    episodes: apiPodcast.episodes.map(mapEpisode),
   };
 }
