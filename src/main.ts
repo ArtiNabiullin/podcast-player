@@ -3,7 +3,7 @@ import { searchPodcasts, getBestPodcasts, getPodcast } from "./api/podcasts";
 import { createPodcastCard } from "./components/createPodcastCard";
 import { setupSearch } from "./components/search";
 import { renderPodcastDetails } from "./components/podcastDetails";
-import { showDetails, showPodcasts } from "./utils/view";
+import { showDetails } from "./utils/view";
 import type { Podcast } from "./types/podcast";
 
 // Рендерим карточки
