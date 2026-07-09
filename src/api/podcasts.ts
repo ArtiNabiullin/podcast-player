@@ -6,7 +6,7 @@ import { mapPodcast, mapPodcastDetails } from "../mappers/podcastMapper";
 // В этой функции получаем данные
 export async function getBestPodcasts(): Promise<Podcast[]> {
   const data = await request<ITunesResponse>(
-    "/search?term=podcast&entity=podcast&limit=20",
+    "/search?q=podcast&entity=podcast&limit=20",
   );
 
   return data.results.map(mapPodcast);
