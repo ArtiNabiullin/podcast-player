@@ -4,6 +4,7 @@ import { createPodcastCard } from "./components/createPodcastCard";
 import { setupSearch } from "./components/search";
 import { renderPodcastDetails } from "./components/podcastDetails";
 import { showDetails, showPodcasts } from "./utils/view";
+import type { Podcast } from "./types/podcast";
 
 // Рендерим карточки
 function renderPodcasts(podcasts: Podcast[]) {
@@ -22,6 +23,7 @@ function renderPodcasts(podcasts: Podcast[]) {
       renderPodcastDetails(details);
 
       showDetails();
+      showPodcasts();
     });
     container.appendChild(card);
   });
