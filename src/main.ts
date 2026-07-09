@@ -20,8 +20,6 @@ function renderPodcasts(podcasts: Podcast[]) {
     const card = createPodcastCard(podcast, async (selectedPodcast) => {
       const details = await getPodcast(selectedPodcast.id);
 
-      console.log("PODCAST DETAILS:", details);
-
       renderPodcastDetails(details);
 
       showDetails();
