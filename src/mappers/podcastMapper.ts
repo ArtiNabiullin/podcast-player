@@ -1,25 +1,29 @@
-import type { PodcastApi, PodcastDetailsResponse } from "../types/api";
+import type { PodcastApi, LookupResponse } from "../types/api";
 import type { Podcast, PodcastDetails } from "../types/podcast";
 import { mapEpisode } from "./episodeMapper";
 
 // преобразуем данные
 export function mapPodcast(apiPodcast: PodcastApi): Podcast {
   return {
-    id: apiPodcast.id,
-    title: apiPodcast.title,
-    image: apiPodcast.image,
-    publisher: apiPodcast.publisher,
-    totalEpisodes: apiPodcast.total_episodes,
-    description: apiPodcast.description,
+    id: String(apiPodcast.collectionId),
+    title: apiPodcast.collectionName,
+    image: apiPodcast.artworkUrl600,
+    publisher: apiPodcast.artistName,
+    totalEpisodes: 0,
+    description: "",
   };
 }
 
 // добавляем данные конкретного епизода
-export function mapPodcastDetails(
-  apiPodcast: PodcastDetailsResponse,
-): PodcastDetails {
+export function mapPodcastDetails(data: LookupResponse): PodcastDetails {
+  const [podcast, ...episodes] = data.results;
+
+  if (!podcast || !("collectionId" in podcast)) {
+    throw new Error("Podcast not found");
+  }
+
   return {
-    ...mapPodcast(apiPodcast),
-    episodes: apiPodcast.episodes.map(mapEpisode),
+    ...mapPodcast(podcast),
+    episodes: episodes.filter((item) => "trackId" in item).map(mapEpisode),
   };
 }
