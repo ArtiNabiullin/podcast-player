@@ -8,7 +8,7 @@ function getElement(id: string) {
 
   return element;
 }
-
+// функция для отображения подробной информации о подкасте
 export function showDetails() {
   const podcasts = getElement("podcasts");
   const details = getElement("details");
@@ -23,7 +23,7 @@ export function showDetails() {
   backButton.classList.remove("hidden");
   backButton.classList.add("visible");
 }
-
+// функция для отображения списка подкастов
 export function showPodcasts() {
   const podcasts = getElement("podcasts");
   const details = getElement("details");

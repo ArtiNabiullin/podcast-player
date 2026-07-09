@@ -1,6 +1,6 @@
 import type { Episode } from "../types/podcast";
 
-//вынесем эпизод в отдельный компонент.
+//компонент карточки эпизода
 export function createEpisodeCard(episode: Episode): HTMLDivElement {
   const card = document.createElement("div");
 
@@ -12,7 +12,14 @@ export function createEpisodeCard(episode: Episode): HTMLDivElement {
   const duration = document.createElement("p");
   duration.textContent = `${Math.floor(episode.audioLengthSec / 60)} min`;
 
-  card.append(title, duration);
+  const description = document.createElement("p");
+  description.textContent = episode.description;
+
+  const audio = document.createElement("audio");
+  audio.controls = true;
+  audio.src = episode.audio;
+
+  card.append(title, duration, description, audio);
 
   return card;
 }

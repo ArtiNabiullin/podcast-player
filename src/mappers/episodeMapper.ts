@@ -9,8 +9,8 @@ export function mapEpisode(apiEpisode: EpisodeApi): Episode {
     title: apiEpisode.trackName,
     image: apiEpisode.artworkUrl600,
     description: apiEpisode.description ?? "",
-    audio: "",
+    audio: apiEpisode.previewUrl ?? "",
     pubDateMs: Date.parse(apiEpisode.releaseDate),
-    audioLengthSec: 0,
+    audioLengthSec: Math.floor((apiEpisode.trackTimeMillis ?? 0) / 1000),
   };
 }

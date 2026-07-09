@@ -1,7 +1,6 @@
 import type { Podcast } from "../types/podcast";
 
 //создаем карточки подкастов
-
 function createTextElement<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   text: string,
@@ -11,6 +10,7 @@ function createTextElement<K extends keyof HTMLElementTagNameMap>(
   return element;
 }
 
+// создаем карточку подкаста
 export function createPodcastCard(
   podcast: Podcast,
   onClick: (podcast: Podcast) => void,
