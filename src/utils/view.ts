@@ -14,6 +14,8 @@ export function showDetails() {
   const details = getElement("details");
   const backButton = getElement("back-button");
 
+  console.log("BEFORE:", podcasts.className);
+
   podcasts.classList.remove("visible");
   podcasts.classList.add("hidden");
 
@@ -22,6 +24,8 @@ export function showDetails() {
 
   backButton.classList.remove("hidden");
   backButton.classList.add("visible");
+
+  console.log("AFTER:", podcasts.className);
 }
 // функция для отображения списка подкастов
 export function showPodcasts() {
