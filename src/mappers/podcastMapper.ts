@@ -14,7 +14,7 @@ export function mapPodcast(apiPodcast: PodcastApi): Podcast {
     title: apiPodcast.collectionName,
     image: apiPodcast.artworkUrl600,
     publisher: apiPodcast.artistName,
-    totalEpisodes: 0,
+    totalEpisodes: apiPodcast.trackCount ?? 0,
     description: "",
   };
 }

@@ -2,7 +2,6 @@ import type { PodcastDetails } from "../types/podcast";
 import { createEpisodeCard } from "./episodeCard";
 
 export function renderPodcastDetails(podcast: PodcastDetails) {
-  console.log("DETAILS:", podcast);
   console.log("FIRST EPISODE:", podcast.episodes[0]);
 
   const container = document.getElementById("details");

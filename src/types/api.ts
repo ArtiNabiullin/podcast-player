@@ -7,6 +7,8 @@ export interface PodcastApi {
   collectionName: string;
   artworkUrl600: string;
   artistName: string;
+
+  trackCount?: number;
 }
 
 export interface ITunesResponse {
