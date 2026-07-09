@@ -1,3 +1,4 @@
+// загрузка itunes к netify
 export async function handler(event) {
   const params = event.queryStringParameters;
 
