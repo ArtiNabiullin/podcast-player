@@ -21,6 +21,8 @@ export function playEpisode(episode: Episode) {
   title.textContent = episode.title;
   audio.src = episode.audio;
 
+  console.log("PLAY:", title);
+
   audio.play().catch((error) => {
     console.log("Failed to play audio:", error);
   });
