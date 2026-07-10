@@ -58,3 +58,27 @@ body {
   width: 100%;
   margin-top: 10px;
 }
+
+/* desc cards style */
+.episode-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.episode-card img {
+  width: 150px;
+  border-radius: 10px;
+}
+
+.episode-card button {
+  cursor: pointer;
+  padding: 8px 15px;
+}
+
+.episodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

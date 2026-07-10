@@ -22,7 +22,7 @@ export function createEpisodeCard(
   duration.textContent = `${Math.floor(episode.audioLengthSec / 60)} min`;
 
   const description = document.createElement("p");
-  description.textContent = episode.description;
+  description.textContent = truncate(episode.description, 200);
 
   const playButton = document.createElement("button");
   playButton.textContent = "▶ Play";
@@ -32,4 +32,12 @@ export function createEpisodeCard(
   card.append(image, title, date, duration, description, playButton);
 
   return card;
+}
+
+function truncate(text: string, length: number) {
+  if (text.length <= length) {
+    return text;
+  }
+
+  return text.slice(0, length) + "...";
 }

@@ -29,6 +29,7 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
   episodesTitle.textContent = "Episodes";
 
   const episodesList = document.createElement("div");
+  episodesList.className = "episodes-list";
 
   let visibleEpisodes = 10;
 
