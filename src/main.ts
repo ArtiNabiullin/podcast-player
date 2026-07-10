@@ -8,7 +8,9 @@ import {
   showPodcasts,
   showLoading,
   showEmptyState,
+  showPlaylist,
 } from "./utils/view";
+import { renderPlaylist } from "./components/renderPlaylist";
 import type { Podcast } from "./types/podcast";
 
 // Рендерим карточки
@@ -82,4 +84,12 @@ const backButton = document.getElementById("back-button");
 
 backButton?.addEventListener("click", () => {
   showPodcasts();
+});
+
+const playlistButton = document.getElementById("playlist-button");
+
+playlistButton?.addEventListener("click", () => {
+  renderPlaylist();
+
+  showPlaylist();
 });

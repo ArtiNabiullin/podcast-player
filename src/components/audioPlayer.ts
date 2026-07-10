@@ -94,17 +94,15 @@ export function playEpisode(episode: Episode) {
 
   audio.load();
 
-  audio.addEventListener(
-    "loadedmetadata",
-    () => {
-      const savedTime = getProgress(episode.id);
+  const savedProgress = getProgress(episode.id);
 
-      if (savedTime) {
-        audio.currentTime = Math.max(savedTime - 10, 0);
-      }
-    },
-    { once: true },
-  );
+  audio.addEventListener("loadedmetadata", function restoreProgress() {
+    if (savedProgress !== null) {
+      audio.currentTime = Math.max(savedProgress - 10, 0);
+    }
+
+    audio.removeEventListener("loadedmetadata", restoreProgress);
+  });
 
   playButton.textContent = "⏸";
 

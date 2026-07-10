@@ -1,4 +1,5 @@
 import type { Episode } from "../types/podcast";
+import { saveToPlayList } from "../utils/storage";
 
 //компонент карточки эпизода
 export function createEpisodeCard(
@@ -29,7 +30,24 @@ export function createEpisodeCard(
 
   playButton.addEventListener("click", () => onPlay(episode));
 
-  card.append(image, title, date, duration, description, playButton);
+  const playlistButton = document.createElement("button");
+  playlistButton.textContent = "➕ Add to playlist";
+
+  playlistButton.addEventListener("click", () => {
+    saveToPlayList(episode);
+
+    playlistButton.textContent = "✓ Added";
+  });
+
+  card.append(
+    image,
+    title,
+    date,
+    duration,
+    description,
+    playButton,
+    playlistButton,
+  );
 
   return card;
 }

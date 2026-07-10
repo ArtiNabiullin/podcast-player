@@ -11,6 +11,10 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
   }
 
   container.innerHTML = "";
+  container.className = "podcast-details";
+
+  const info = document.createElement("div");
+  info.className = "podcast-info";
 
   const title = document.createElement("h1");
   title.textContent = podcast.title;
@@ -23,6 +27,8 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
 
   const description = document.createElement("p");
   description.textContent = podcast.description;
+
+  info.append(image, title, publisher, description);
 
   const episodesTitle = document.createElement("h2");
   episodesTitle.textContent = "Episodes";
@@ -62,13 +68,5 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
     }
   });
 
-  container.append(
-    image,
-    title,
-    publisher,
-    description,
-    episodesTitle,
-    episodesList,
-    loadMoreButton,
-  );
+  container.append(info, episodesTitle, episodesList, loadMoreButton);
 }
