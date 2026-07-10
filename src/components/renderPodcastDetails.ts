@@ -36,9 +36,7 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
     const startIndex = episodesList.children.length;
 
     podcast.episodes.slice(startIndex, visibleEpisodes).forEach((episode) => {
-      const card = createEpisodeCard(episode, (selectedEpisode) => {
-        playEpisode(selectedEpisode);
-      });
+      const card = createEpisodeCard(episode, playEpisode);
 
       episodesList.append(card);
     });
