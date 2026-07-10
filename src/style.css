@@ -73,19 +73,19 @@ small {
   transition: 0.25s;
 
   animation: cardAppear 0.35s ease;
+}
 
-  @keyframes cardAppear {
-    from {
-      opacity: 0;
+@keyframes cardAppear {
+  from {
+    opacity: 0;
 
-      transform: translateY(15px);
-    }
+    transform: translateY(15px);
+  }
 
-    to {
-      opacity: 1;
+  to {
+    opacity: 1;
 
-      transform: translateY(0);
-    }
+    transform: translateY(0);
   }
 }
 
@@ -198,19 +198,19 @@ small {
   transition: 0.25s;
 
   animation: episodeAppear 0.35s ease;
+}
 
-  @keyframes episodeAppear {
-    from {
-      opacity: 0;
+@keyframes episodeAppear {
+  from {
+    opacity: 0;
 
-      transform: translateX(-15px);
-    }
+    transform: translateX(-15px);
+  }
 
-    to {
-      opacity: 1;
+  to {
+    opacity: 1;
 
-      transform: translateX(0);
-    }
+    transform: translateX(0);
   }
 }
 
