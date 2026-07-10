@@ -1,9 +1,7 @@
 import type { Episode } from "../types/podcast";
 import { saveProgress, getProgress } from "../utils/storage";
 
-const container = document.getElementById(
-  "audio-player",
-) as HTMLDivElement | null;
+const container = document.getElementById("audio-player") as HTMLDivElement;
 
 if (!container) {
   throw new Error("Audio player container not found");
