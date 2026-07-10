@@ -35,6 +35,23 @@ export function showPodcasts() {
   details.classList.remove("visible");
   details.classList.add("hidden");
 
+  details.innerHTML = "";
+
   backButton.classList.remove("visible");
   backButton.classList.add("hidden");
+}
+
+// отображение состояния загрузки
+export function showLoading() {
+  const details = getElement("details");
+
+  details.classList.remove("hidden");
+  details.classList.add("visible");
+
+  details.innerHTML = "";
+
+  const loader = document.createElement("p");
+  loader.textContent = "Loading podcast...";
+
+  details.append(loader);
 }

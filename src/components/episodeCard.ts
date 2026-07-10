@@ -27,8 +27,6 @@ export function createEpisodeCard(
   const playButton = document.createElement("button");
   playButton.textContent = "▶ Play";
 
-  console.log(episode.title);
-
   playButton.addEventListener("click", () => onPlay(episode));
 
   card.append(image, title, date, duration, description, playButton);
