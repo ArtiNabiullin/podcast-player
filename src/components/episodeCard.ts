@@ -1,7 +1,10 @@
 import type { Episode } from "../types/podcast";
 
 //компонент карточки эпизода
-export function createEpisodeCard(episode: Episode): HTMLDivElement {
+export function createEpisodeCard(
+  episode: Episode,
+  onPlay: (episode: Episode) => void,
+): HTMLDivElement {
   const card = document.createElement("div");
   card.className = "episode-card";
 
@@ -21,11 +24,12 @@ export function createEpisodeCard(episode: Episode): HTMLDivElement {
   const description = document.createElement("p");
   description.textContent = episode.description;
 
-  const audio = document.createElement("audio");
-  audio.controls = true;
-  audio.src = episode.audio;
+  const playButton = document.createElement("button");
+  playButton.textContent = "▶ Play";
 
-  card.append(image, title, date, duration, description, audio);
+  playButton.addEventListener("click", () => onPlay(episode));
+
+  card.append(image, title, date, duration, description, playButton);
 
   return card;
 }
