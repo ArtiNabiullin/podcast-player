@@ -30,9 +30,38 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
 
   const episodesList = document.createElement("div");
 
-  podcast.episodes.forEach((episode) => {
-    const card = createEpisodeCard(episode, playEpisode);
-    episodesList.append(card);
+  let visibleEpisodes = 10;
+
+  function renderEpisodes() {
+    const startIndex = episodesList.children.length;
+
+    podcast.episodes.slice(startIndex, visibleEpisodes).forEach((episode) => {
+      const card = createEpisodeCard(episode, (selectedEpisode) => {
+        playEpisode(selectedEpisode);
+      });
+
+      episodesList.append(card);
+    });
+  }
+
+  renderEpisodes();
+
+  const loadMoreButton = document.createElement("button");
+
+  loadMoreButton.textContent = "Load more";
+
+  if (podcast.episodes.length <= 10) {
+    loadMoreButton.remove();
+  }
+
+  loadMoreButton.addEventListener("click", () => {
+    visibleEpisodes += 10;
+
+    renderEpisodes();
+
+    if (visibleEpisodes >= podcast.episodes.length) {
+      loadMoreButton.remove();
+    }
   });
 
   container.append(
@@ -43,5 +72,6 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
     player,
     episodesTitle,
     episodesList,
+    loadMoreButton,
   );
 }
