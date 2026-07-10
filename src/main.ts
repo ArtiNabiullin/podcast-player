@@ -3,7 +3,12 @@ import { searchPodcasts, getBestPodcasts, getPodcast } from "./api/podcasts";
 import { createPodcastCard } from "./components/createPodcastCard";
 import { setupSearch } from "./components/search";
 import { renderPodcastDetails } from "./components/renderPodcastDetails";
-import { showDetails, showPodcasts, showLoading } from "./utils/view";
+import {
+  showDetails,
+  showPodcasts,
+  showLoading,
+  showEmptyState,
+} from "./utils/view";
 import type { Podcast } from "./types/podcast";
 
 // Рендерим карточки
@@ -27,7 +32,7 @@ function renderPodcasts(podcasts: Podcast[]) {
 
         showDetails();
       } catch (error) {
-        console.log(error);
+        console.error(error);
 
         const container = document.getElementById("details");
 
@@ -56,6 +61,11 @@ async function init() {
       }
 
       const results = await searchPodcasts(query);
+
+      if (results.length === 0) {
+        showEmptyState("No podcasts found.");
+        return;
+      }
 
       renderPodcasts(results);
     });

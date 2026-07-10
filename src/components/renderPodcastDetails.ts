@@ -1,10 +1,9 @@
 import type { PodcastDetails } from "../types/podcast";
 import { createEpisodeCard } from "./episodeCard";
-import { getAudioPlayer, playEpisode } from "./audioPlayer";
+import { playEpisode } from "./audioPlayer";
 
 //компонент отображения деталей подкаста
 export function renderPodcastDetails(podcast: PodcastDetails) {
-  const player = getAudioPlayer();
   const container = document.getElementById("details");
 
   if (!container) {
@@ -68,7 +67,6 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
     title,
     publisher,
     description,
-    player,
     episodesTitle,
     episodesList,
     loadMoreButton,

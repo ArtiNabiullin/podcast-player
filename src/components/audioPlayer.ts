@@ -1,7 +1,12 @@
 import type { Episode } from "../types/podcast";
 
-const container = document.createElement("div");
-container.className = "audio-player";
+const container = document.getElementById(
+  "audio-player",
+) as HTMLDivElement | null;
+
+if (!container) {
+  throw new Error("Audio player container not found");
+}
 
 const image = document.createElement("img");
 image.className = "player-image";
@@ -10,8 +15,20 @@ const title = document.createElement("h3");
 title.textContent = "Nothing playing";
 
 const audio = document.createElement("audio");
-audio.controls = true;
 audio.preload = "metadata";
+
+const playButton = document.createElement("button");
+playButton.textContent = "▶ Start";
+
+playButton.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play();
+    playButton.textContent = "⏸";
+  } else {
+    audio.pause();
+    playButton.textContent = "▶";
+  }
+});
 
 const stopButton = document.createElement("button");
 stopButton.textContent = "⏹ Stop";
@@ -20,9 +37,39 @@ stopButton.addEventListener("click", () => {
   audio.pause();
 
   audio.currentTime = 0;
+
+  playButton.textContent = "▶ Start";
 });
 
-container.append(image, title, audio, stopButton);
+const time = document.createElement("span");
+time.textContent = "0:00 / 0:00";
+
+const progress = document.createElement("input");
+progress.type = "range";
+progress.min = "0";
+progress.value = "0";
+progress.step = "1";
+progress.className = "progress";
+
+audio.addEventListener("loadedmetadata", () => {
+  progress.max = String(audio.duration);
+});
+
+audio.addEventListener("timeupdate", () => {
+  progress.value = String(audio.currentTime);
+
+  time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+});
+
+audio.addEventListener("ended", () => {
+  playButton.textContent = "▶ Start";
+});
+
+progress.addEventListener("input", () => {
+  audio.currentTime = Number(progress.value);
+});
+
+container.append(image, title, playButton, time, progress, audio, stopButton);
 
 // Функция для получения DOM-элемента аудио-плеера
 export function getAudioPlayer(): HTMLDivElement {
@@ -32,7 +79,7 @@ export function getAudioPlayer(): HTMLDivElement {
 // Функция для воспроизведения эпизода
 export function playEpisode(episode: Episode) {
   image.src = episode.image;
-  image.alt = episode.image;
+  image.alt = episode.title;
 
   title.textContent = episode.title;
 
@@ -40,7 +87,24 @@ export function playEpisode(episode: Episode) {
 
   audio.load();
 
+  playButton.textContent = "⏸";
+
   audio.play().catch((error) => {
     console.error("Playback error:", error);
   });
+}
+
+// Функция для форматирования времени
+function formatTime(seconds: number) {
+  if (isNaN(seconds)) {
+    return "0:00";
+  }
+
+  const minutes = Math.floor(seconds / 60);
+
+  const secs = Math.floor(seconds % 60)
+    .toString()
+    .padStart(2, "0");
+
+  return `${minutes}:${secs}`;
 }

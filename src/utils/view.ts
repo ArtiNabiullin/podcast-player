@@ -55,3 +55,14 @@ export function showLoading() {
 
   details.append(loader);
 }
+
+export function showEmptyState(message: string) {
+  const podcasts = getElement("podcasts");
+
+  podcasts.innerHTML = "";
+
+  const text = document.createElement("p");
+  text.textContent = message;
+
+  podcasts.append(text);
+}
