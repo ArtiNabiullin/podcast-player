@@ -1,4 +1,5 @@
 import type { Episode } from "../types/podcast";
+import { saveProgress, getProgress } from "../utils/storage";
 
 const container = document.getElementById(
   "audio-player",
@@ -22,7 +23,7 @@ playButton.textContent = "▶ Start";
 
 playButton.addEventListener("click", () => {
   if (audio.paused) {
-    audio.play();
+    audio.play().catch(console.error);
     playButton.textContent = "⏸";
   } else {
     audio.pause();
@@ -51,6 +52,8 @@ progress.value = "0";
 progress.step = "1";
 progress.className = "progress";
 
+let currentEpisodeId = "";
+
 audio.addEventListener("loadedmetadata", () => {
   progress.max = String(audio.duration);
 });
@@ -59,6 +62,10 @@ audio.addEventListener("timeupdate", () => {
   progress.value = String(audio.currentTime);
 
   time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+
+  if (currentEpisodeId) {
+    saveProgress(currentEpisodeId, audio.currentTime);
+  }
 });
 
 audio.addEventListener("ended", () => {
@@ -83,9 +90,23 @@ export function playEpisode(episode: Episode) {
 
   title.textContent = episode.title;
 
+  currentEpisodeId = episode.id;
+
   audio.src = episode.audio;
 
   audio.load();
+
+  audio.addEventListener(
+    "loadedmetadata",
+    () => {
+      const savedTime = getProgress(episode.id);
+
+      if (savedTime) {
+        audio.currentTime = Math.max(savedTime - 10, 0);
+      }
+    },
+    { once: true },
+  );
 
   playButton.textContent = "⏸";
 
