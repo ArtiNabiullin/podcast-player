@@ -1,6 +1,8 @@
 import type { PodcastDetails } from "../types/podcast";
 import { createEpisodeCard } from "./episodeCard";
+import { playEpisode } from "./audioPlayer";
 
+//компонент отображения деталей подкаста
 export function renderPodcastDetails(podcast: PodcastDetails) {
   const container = document.getElementById("details");
 
@@ -9,6 +11,10 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
   }
 
   container.innerHTML = "";
+  container.className = "podcast-details";
+
+  const info = document.createElement("div");
+  info.className = "podcast-info";
 
   const title = document.createElement("h1");
   title.textContent = podcast.title;
@@ -22,22 +28,45 @@ export function renderPodcastDetails(podcast: PodcastDetails) {
   const description = document.createElement("p");
   description.textContent = podcast.description;
 
+  info.append(image, title, publisher, description);
+
   const episodesTitle = document.createElement("h2");
   episodesTitle.textContent = "Episodes";
 
   const episodesList = document.createElement("div");
+  episodesList.className = "episodes-list";
 
-  podcast.episodes.forEach((episode) => {
-    const card = createEpisodeCard(episode);
-    episodesList.append(card);
+  let visibleEpisodes = 10;
+
+  function renderEpisodes() {
+    const startIndex = episodesList.children.length;
+
+    podcast.episodes.slice(startIndex, visibleEpisodes).forEach((episode) => {
+      const card = createEpisodeCard(episode, playEpisode);
+
+      episodesList.append(card);
+    });
+  }
+
+  renderEpisodes();
+
+  const loadMoreButton = document.createElement("button");
+
+  loadMoreButton.textContent = "Load more";
+
+  if (podcast.episodes.length <= 10) {
+    loadMoreButton.remove();
+  }
+
+  loadMoreButton.addEventListener("click", () => {
+    visibleEpisodes += 10;
+
+    renderEpisodes();
+
+    if (visibleEpisodes >= podcast.episodes.length) {
+      loadMoreButton.remove();
+    }
   });
 
-  container.append(
-    image,
-    title,
-    publisher,
-    description,
-    episodesTitle,
-    episodesList,
-  );
+  container.append(info, episodesTitle, episodesList, loadMoreButton);
 }

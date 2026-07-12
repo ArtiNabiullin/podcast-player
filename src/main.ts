@@ -3,7 +3,14 @@ import { searchPodcasts, getBestPodcasts, getPodcast } from "./api/podcasts";
 import { createPodcastCard } from "./components/createPodcastCard";
 import { setupSearch } from "./components/search";
 import { renderPodcastDetails } from "./components/renderPodcastDetails";
-import { showDetails } from "./utils/view";
+import {
+  showDetails,
+  showPodcasts,
+  showLoading,
+  showEmptyState,
+  showPlaylist,
+} from "./utils/view";
+import { renderPlaylist } from "./components/renderPlaylist";
 import type { Podcast } from "./types/podcast";
 
 // Рендерим карточки
@@ -18,12 +25,25 @@ function renderPodcasts(podcasts: Podcast[]) {
 
   podcasts.forEach((podcast) => {
     const card = createPodcastCard(podcast, async (selectedPodcast) => {
-      const details = await getPodcast(selectedPodcast.id);
+      showLoading();
 
-      renderPodcastDetails(details);
+      try {
+        const details = await getPodcast(selectedPodcast.id);
 
-      showDetails();
+        renderPodcastDetails(details);
+
+        showDetails();
+      } catch (error) {
+        console.error(error);
+
+        const container = document.getElementById("details");
+
+        if (container) {
+          container.innerHTML = "Failed to load podcast.";
+        }
+      }
     });
+
     container.appendChild(card);
   });
 }
@@ -44,6 +64,11 @@ async function init() {
 
       const results = await searchPodcasts(query);
 
+      if (results.length === 0) {
+        showEmptyState("No podcasts found.");
+        return;
+      }
+
       renderPodcasts(results);
     });
   } catch (error) {
@@ -54,3 +79,17 @@ async function init() {
 }
 
 init();
+
+const backButton = document.getElementById("back-button");
+
+backButton?.addEventListener("click", () => {
+  showPodcasts();
+});
+
+const playlistButton = document.getElementById("playlist-button");
+
+playlistButton?.addEventListener("click", () => {
+  renderPlaylist();
+
+  showPlaylist();
+});
